@@ -486,6 +486,13 @@ CLAUDE/AGENTS) · 7 Playwright check and fixes · 8 final site-bundle from the c
 ## 5. Open points to carry into HANDOFF.md "Open Questions"
 - ISL 2021-02 text not re-checked (403 from DCSA to the build environment).
 - Three website SEAD 3 citations to correct on fsotools.ai (section 3 above).
+  **Done on the website side (2026-10-31, branch `claude/brave-newton-i9x65y` of
+  fsotools-website, verified against the ODNI SEAD 3 text):** the three Reference
+  cells now read `SEAD 3 §§G.2(a)–(c), H.2(a)–(c), F.3(f); ISL Table 2`,
+  `SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 1–3` and
+  `SEAD 3 §§G.1, H.1, H.2(e)–(g); ISL Tables 2–3`. Refresh
+  `test/fixtures/industry-rows.json` and `ra-events.js` from that branch (or from
+  `main` once it merges) so the authorities match again.
 - `ra-xlsx.js` keeps the ITPM body verbatim, so file properties still say
   "FSOtools ITP workbook" in docProps/app.xml; the owner may want a product-neutral
   string in both repositories.
