@@ -1,0 +1,17 @@
+32 CFR §117.3 Acronyms and definitions (selected; eCFR current as of 2026-10-29)
+
+CDC cleared defense contractor
+CSA cognizant security agency
+FGI foreign government information
+FSO facility security officer
+GCA government contracting activity
+KMP key management personnel
+LAA limited access authorization
+Adverse information means any information that adversely reflects on the integrity or character of a cleared employee, that suggests that his or her ability to safeguard classified information may be impaired, that his or her access to classified information clearly may not be in the interest of national security, or that the individual constitutes an insider threat.
+CDC means a subset of contractors cleared under the NISP who have classified contracts with the DoD.
+CSA means an agency designated as having NISP implementation and security responsibilities for its own agencies (including component agencies) and any entities and non-CSA agencies under its cognizance. The CSAs are: DoD; DOE; NRC; ODNI; and DHS.
+FGI means information that is:
+GCA means an element of an agency that the agency head has designated and delegated broad authority regarding acquisition functions. A foreign government may also be a GCA.
+Insider threat means the likelihood, risk, or potential that an insider will use his or her authorized access, wittingly or unwittingly, to do harm to the national security of the United States. Insider threats may include harm to contractor or program information, to the extent that the information impacts the contractor or agency's obligations to protect classified NSI.
+KMP means an entity's senior management official (SMO), facility security officer (FSO), insider threat program senior official (ITPSO), and all other entity officials who either hold majority interest or stock in, or have direct or indirect authority to influence or decide issues affecting the management or operations of, the entity or classified contract performance.
+LAA means security access authorization to CONFIDENTIAL or SECRET information granted to non-U.S. citizens requiring only limited access in the course of their regular duties.

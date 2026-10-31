@@ -1,0 +1,241 @@
+// Reporting events for the FSO Reporting Assistant: the 27 reviewed rows of
+// the cleared industry reporting guide (fsotools.ai/reporting/industry/),
+// plus the clarifying questions and the decision rules that turn an event and
+// its answers into an outcome (report? to whom? by when? what to include?).
+//
+// SITE_ROWS holds the website's wording verbatim (trigger, route, timing and
+// authority); test/fixtures/industry-rows.json pins it and the test compares
+// it with the website checkout when one is beside this repository. Keep the
+// authority strings exactly as the website has them; put verification notes
+// in `verified` on the event, not in the authority.
+//
+// STATUS: skeleton. SITE_ROWS is complete; BRANCHES, QUESTIONS, EVENTS and
+// decide() are still to be written (see HANDOFF-LOCAL.md, section 6).
+(function (root) {
+  'use strict';
+
+  const SITE = 'https://fsotools.ai/reporting/industry/#';
+  const CFR = 'https://www.ecfr.gov/current/title-32/subtitle-A/chapter-I/subchapter-D/part-117/section-117.8#p-';
+  const ITPM = 'https://fsotools.ai/itp/app/reportable';
+
+  const SITE_ROWS = {
+    'travel': {
+      layer: 'sead3',
+      heading: 'SEAD 3 · Unofficial foreign travel',
+      trigger: 'Give the FSO/designee the travel itinerary and required passport/trip details in advance. Report itinerary deviations and unplanned Canada/Mexico day trips within five business days after return. In an emergency, advise the FSO before departure when feasible and complete the report within five business days after return. Mixed personal travel is reportable for its unofficial portion. Also report unplanned contact with foreign governments, companies or citizens, suspicious travel anomalies, and foreign legal or customs incidents, and follow any advance-notice, briefing and post-travel steps that apply.',
+      route: 'Employee → FSO/designee → required DISS Foreign Travel submission. Official travel in direct support of an established U.S. Government contract is treated under official-travel rules; check contract and SCI/SAP directions too. The DCSA bulk tool does not remove the employee’s duty to tell the FSO.',
+      timing: '',
+      authority: 'SEAD 3 §F.1(b), App. A.1; ISL Table 4; DCSA travel guidance',
+    },
+    'foreign-contacts': {
+      layer: 'sead3',
+      heading: 'SEAD 3 · Foreign contacts and relationships',
+      trigger: 'Report contact with a known or suspected foreign intelligence entity; a continuing relationship with a known foreign national involving bonds of affection, intimate contact, personal obligation or exchange of personal information; and the specified foreign-national roommate, relationship or family events for the person’s category. Casual public interaction alone is not the test.',
+      route: 'Employee → FSO/designee. Official work contact without personal bonds is generally not reportable as a relationship; report it if suspicious or a security concern. FSO may submit an incident report and notify the DCSA counterintelligence representative when required. Some relationship items apply only to TS/Q categories.',
+      timing: '',
+      authority: 'SEAD 3 §§D.8, F.2; ISL Tables 2–3',
+    },
+    'peer-concerns': {
+      layer: 'sead3',
+      heading: 'SEAD 3 · Report concerns about another covered person',
+      trigger: 'Report known conduct indicating unwillingness to follow security rules, unexplained affluence or excessive debt, alcohol or illegal drug misuse, criminal conduct, behavior affecting safe protection of information, misuse of Government property/systems, or loss, compromise, tampering or unauthorized access.',
+      route: 'Employee → FSO/designee through the company reporting process. Report factual observations; do not investigate or diagnose a coworker.',
+      timing: '',
+      authority: 'SEAD 3 §F.3; ISL Table 2',
+    },
+    'foreign-interests': {
+      layer: 'sead3',
+      heading: 'SEAD 3 · Foreign citizenship, affiliation and interests',
+      trigger: 'As applicable to the person’s eligibility: applying for or receiving foreign citizenship/passport or identity documents; foreign business/employment/government service; foreign financial interests, accounts or property; foreign political activity or election voting; foreign financial benefits/support; and specified family or living-status changes.',
+      route: 'Employee → FSO/designee. Some financial, political, marriage/cohabitation, roommate and adoption items are limited to TS/Q-level categories. Use the DCSA desktop aid and the precise category that applies.',
+      timing: '',
+      authority: 'SEAD 3 §§G.1, G.2(d), H.1–2; ISL Tables 2–3',
+    },
+    'targeting-criminal': {
+      layer: 'sead3',
+      heading: 'SEAD 3 · Targeting, media and criminal activity',
+      trigger: 'Report attempted elicitation, exploitation, blackmail, coercion or enticement; suspicious contacts; media contact seeking classified or legally protected information; and reportable arrest, charge, criminal conduct, detention or law-enforcement involvement.',
+      route: 'Employee promptly notifies FSO/designee; the contractor makes required DISS/CSA reports and any separate Government-site, customer or law-enforcement report.',
+      timing: '',
+      authority: 'SEAD 3 §§G.1(a), G.2(c)–(d), H.1(d), H.2(b)–(c); ISL Table 2',
+    },
+    'conduct-financial': {
+      layer: 'sead3',
+      heading: 'SEAD 3 · Drug, alcohol, health, financial and outside-activity matters',
+      trigger: 'Report the drug/alcohol activity, treatment/counseling, financial concern/anomaly, defined health or behavioral event, or outside activity that meets the applicable SEAD 3 category. These are criteria-based; routine treatment alone is not universally reportable.',
+      route: 'Employee → FSO/designee. The company handles sensitive details through approved channels and separately evaluates whether §117.8(c)(1) requires an adverse-information report.',
+      timing: '',
+      authority: 'SEAD 3 §§G.2(d)–(f), §H.2(d)–(h); ISL Tables 1–3',
+    },
+    'isl-crypto-row': {
+      layer: 'sead3',
+      heading: 'ISL 2021-02 · Foreign cryptocurrency (defined reportable interest)',
+      trigger: 'Defined criteria only: ownership of cryptocurrency backed, hosted or managed by a foreign state, or of a wallet hosted by a foreign exchange. Exceptions: the employee is unaware of the foreign nexus, or holds it through a widely diversified fund (such as an index fund) unless the instrument is entirely composed of that foreign-nexus cryptocurrency. Full criteria and report contents →',
+      route: 'Employee → FSO/designee → DISS/successor incident reporting path. This is a defined criterion; ordinary crypto ownership is not automatically reportable.',
+      timing: '',
+      authority: 'ISL Table 1; Appendix A data elements',
+    },
+    'isl-mental-health-row': {
+      layer: 'sead3',
+      heading: 'ISL 2021-02 · Specified mental-health criteria',
+      trigger: 'Only the specified events: a court or administrative finding of mental incompetence; an order to consult a mental-health professional; hospitalization for a mental condition; a qualified professional’s diagnosis of one of the listed disorders; within seven years, changing, stopping or not starting treatment for one of those diagnoses without first consulting a medical professional; current treatment details for those diagnoses; or any health condition the individual believes substantially and adversely affects judgment, reliability or trustworthiness, whether symptomatic or not. It is not a rule to report every instance of mental-health care. Full list of diagnoses →',
+      route: 'Employee → FSO/designee using the approved protected process. A report is not itself an adverse adjudication or a direction to stop treatment; apply the stated limits exactly.',
+      timing: '',
+      authority: 'ISL Table 1',
+    },
+    'c-sead3-procedures': {
+      layer: 'company',
+      heading: 'Covered-person reports required by SEAD 3 and DCSA guidance',
+      trigger: 'Covered-person reports required by SEAD 3 and DCSA guidance',
+      route: 'Employee → FSO/designee; contractor → CSA through DISS or its successor/designated channel.',
+      timing: 'Apply the employee’s SEAD 3 category and event-specific timing. Maintain procedures to inform covered personnel, receive and manage reports, route required submissions and handle reports about other covered people. This is the company implementation duty; it does not replace the individual’s responsibility or other §117.8 reports.',
+      authority: '32 CFR §117.8(a); DCSA ISL 2021-02.',
+    },
+    'c-espionage': {
+      layer: 'company',
+      heading: 'Actual, probable or possible espionage, sabotage, terrorism or subversive activity at any company location',
+      trigger: 'Actual, probable or possible espionage, sabotage, terrorism or subversive activity at any company location',
+      route: 'Contractor → nearest FBI field office; promptly notify CSA and give it a copy of the written report.',
+      timing: 'Submit a written report promptly. An initial phone report is allowed but must be followed by a written report regardless of FBI disposition.',
+      authority: '32 CFR §117.8(b)(1)–(2).',
+    },
+    'c-adverse': {
+      layer: 'company',
+      heading: 'Adverse information concerning an employee eligible for classified access',
+      trigger: 'Adverse information concerning an employee eligible for classified access',
+      route: 'Contractor through FSO/responsible official → CSA-designated personnel-security channel; if assigned to a U.S. Government location, also provide the location’s security POC a copy and final disposition.',
+      timing: 'Report adverse information that meets the applicable reporting standard; do not report rumor or innuendo. Employment termination does not end the duty. Provide disposition/follow-up through the required channel. If information is learned after employment ends, §117.8(c)(1)(i) still applies.',
+      authority: '32 CFR §117.8(c)(1); DCSA ISL 2021-02.',
+    },
+    'c-suspicious': {
+      layer: 'company',
+      heading: 'Suspicious contacts, efforts to elicit protected information, attempted exploitation, or attempts to gain unauthorized facility/classified access',
+      trigger: 'Suspicious contacts, efforts to elicit protected information, attempted exploitation, or attempts to gain unauthorized facility/classified access',
+      route: 'Contractor/FSO → CSA; FBI or other authority as required by the circumstances and law.',
+      timing: 'Report information about contacts with eligible employees and any person’s attempt to obtain unauthorized access, elicit information, or target an employee for foreign-intelligence exploitation. Capture who/what/when/how and follow CSA/CI instructions.',
+      authority: '32 CFR §117.8(c)(2); §117.8(b) when applicable.',
+    },
+    'c-status': {
+      layer: 'company',
+      heading: 'Status change for an eligible employee: death, name change, termination of employment or change in citizenship',
+      trigger: 'Status change for an eligible employee: death, name change, termination of employment or change in citizenship',
+      route: 'Contractor through CSA-designated mechanism → CSA.',
+      timing: 'Submit the status change; align personnel/access records and complete separation, debriefing and material recovery as applicable.',
+      authority: '32 CFR §117.8(c)(3).',
+    },
+    'c-laa': {
+      layer: 'company',
+      heading: 'Naturalization of an employee previously granted an LAA',
+      trigger: 'Naturalization of an employee previously granted an LAA',
+      route: 'Contractor → CSA.',
+      timing: 'Report city/county/state, date, court and certificate number.',
+      authority: '32 CFR §117.8(c)(4).',
+    },
+    'c-withdraw': {
+      layer: 'company',
+      heading: 'Employee no longer wants an eligibility determination or no longer wants classified access/work',
+      trigger: 'Employee no longer wants an eligibility determination or no longer wants classified access/work',
+      route: 'Contractor → CSA.',
+      timing: 'Report the request and the employee’s reason. Do not treat it as an adjudicative denial.',
+      authority: '32 CFR §117.8(c)(5).',
+    },
+    'c-nda': {
+      layer: 'company',
+      heading: 'Employee refuses to sign SF 312 or another approved classified-information NDA',
+      trigger: 'Employee refuses to sign SF 312 or another approved classified-information NDA',
+      route: 'Contractor → CSA.',
+      timing: 'Report refusal. Do not grant access without the required agreement.',
+      authority: '32 CFR §117.8(c)(6).',
+    },
+    'company-changes': {
+      layer: 'company',
+      heading: 'Change that may affect entity eligibility, personnel eligibility, insider-threat risk, safeguarding or classified-information status',
+      trigger: 'Change that may affect entity eligibility, personnel eligibility, insider-threat risk, safeguarding or classified-information status',
+      route: 'Contractor/FSO → CSA; customer/prime also when required by contract or rule.',
+      timing: 'Report as required by the specific trigger: ownership/control or stock transfer; operating name/address of entity or cleared location; KMP changes; termination/reorganization/bankruptcy; material FOCI change or negotiations that may lead to foreign ownership/control (including applicable Schedule 13D); other validity-changing events. Submit updated SF 328 for material FOCI changes under CSA instructions. Subcontractors notify their prime for reports under §117.8(c)(7)–(10).',
+      authority: '32 CFR §117.8(c)(7), (c)(14); SF 328/CSA guidance.',
+    },
+    'c-storage': {
+      layer: 'company',
+      heading: 'Change in requirement or capability to store/safeguard classified material',
+      trigger: 'Change in requirement or capability to store/safeguard classified material',
+      route: 'Contractor → CSA.',
+      timing: 'Report changes in storage requirement or safeguarding capability; update the authorized storage/site records before relying on a changed capability.',
+      authority: '32 CFR §117.8(c)(8).',
+    },
+    'c-emergency': {
+      layer: 'company',
+      heading: 'Emergency makes a location unable to safeguard classified material',
+      trigger: 'Emergency makes a location unable to safeguard classified material',
+      route: 'Contractor → CSA.',
+      timing: 'Report as soon as possible; protect/recover information under emergency procedures and follow CSA direction.',
+      authority: '32 CFR §117.8(c)(9).',
+    },
+    'c-subcontract': {
+      layer: 'company',
+      heading: 'Prime/subcontractor conditions indicate classified information may not be adequately protected or entity eligibility may be affected',
+      trigger: 'Prime/subcontractor conditions indicate classified information may not be adequately protected or entity eligibility may be affected',
+      route: 'Prime, higher-tier subcontractor or subcontractor → its CSA; subcontractor also notifies prime when report is made under §117.8(c)(7)–(10).',
+      timing: 'Report information indicating inadequate protection or another circumstance affecting the other entity’s eligibility. Coordinate contract/customer protection actions.',
+      authority: '32 CFR §117.8(c)(10), (c)(14).',
+    },
+    'c-rediscovered': {
+      layer: 'company',
+      heading: 'Previously terminated classified material is found and returned to accountability',
+      trigger: 'Previously terminated classified material is found and returned to accountability',
+      route: 'Contractor → CSA.',
+      timing: 'Report the rediscovery and disposition so the accountability record is reconciled.',
+      authority: '32 CFR §117.8(c)(11).',
+    },
+    'c-foreign-contract': {
+      layer: 'company',
+      heading: 'Foreign classified contract negotiations or award not placed through a CSA/U.S. GCA that may disclose U.S. classified information or provide access to foreign classified information',
+      trigger: 'Foreign classified contract negotiations or award not placed through a CSA/U.S. GCA that may disclose U.S. classified information or provide access to foreign classified information',
+      route: 'Contractor → CSA.',
+      timing: 'Report during pre-contract negotiation or award when the trigger applies; do not disclose or accept classified information outside approved channels.',
+      authority: '32 CFR §117.8(c)(12).',
+    },
+    'c-foreign-material': {
+      layer: 'company',
+      heading: 'Classified material received from a foreign interest outside U.S. Government channels',
+      trigger: 'Classified material received from a foreign interest outside U.S. Government channels',
+      route: 'Contractor → CSA.',
+      timing: 'Report improper receipt and follow the CSA’s handling/disposition instructions.',
+      authority: '32 CFR §117.8(c)(13).',
+    },
+    'c-loss': {
+      layer: 'company',
+      heading: 'Loss, compromise or suspected compromise of U.S. or foreign classified information',
+      trigger: 'Loss, compromise or suspected compromise of U.S. or foreign classified information',
+      route: 'Contractor → CSA; if on a Government facility, also facility head; CSA notifies GCA under its process.',
+      timing: 'Immediately start a preliminary inquiry and validate classification. If loss/compromise is confirmed, promptly send initial report unless CSA directs otherwise. After investigation, send final report with new material facts, responsible person when determined, corrective/disciplinary action and basis for conclusion. The CSA may specify timing.',
+      authority: '32 CFR §117.8(d)(1)–(4).',
+    },
+    'c-culpability': {
+      layer: 'company',
+      heading: 'Employee culpability for security violation or negligence',
+      trigger: 'Employee culpability for security violation or negligence',
+      route: 'Contractor → CSA.',
+      timing: 'Maintain a system to track violations/patterns and apply graduated administrative/disciplinary action. Submit final culpability report with findings and corrective/disciplinary actions when the responsible individual is determined.',
+      authority: '32 CFR §117.8(e)(1)–(3).',
+    },
+    'c-cyber': {
+      layer: 'company',
+      heading: 'Cyber incident involving a classified covered information system, or other cyber event covered by contract/DFARS',
+      trigger: 'Cyber incident involving a classified covered information system, or other cyber event covered by contract/DFARS',
+      route: 'Covered defense contractor → designated DoD CSO for classified system event; use contract-required recipient for unclassified systems; other NISP/FBI/CSA routes may also apply.',
+      timing: 'For a classified covered system, report immediately. Include incident technique/method, isolated malware sample if available, and potentially affected DoD program information. For non-Federal unclassified systems, follow contract terms. This paragraph applies to covered defense contractors and is not a universal rule for all entities.',
+      authority: '32 CFR §117.8(f); applicable DFARS clause/DoD instructions.',
+    },
+    'c-isoo': {
+      layer: 'company',
+      heading: 'Duplicative CSA security review/audit or duplicate entity-eligibility processing',
+      trigger: 'Duplicative CSA security review/audit or duplicate entity-eligibility processing',
+      route: 'Contractor → Director, ISOO.',
+      timing: 'Report the duplication for resolution and provide the records needed to identify the overlapping review/determination.',
+      authority: '32 CFR §117.8(g)(1)–(2).',
+    },
+  };
+
+  root.RaEvents = { SITE, CFR, ITPM, SITE_ROWS };
+})(typeof window !== 'undefined' ? window : globalThis);

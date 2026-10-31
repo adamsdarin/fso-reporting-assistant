@@ -1,0 +1,92 @@
+/* FSOtools index-folder identity. Embedded with every offline page. Copied from the FSO ITPM Assistant (itp-inspection.css) so the two products look the same. */
+@media screen {
+  :root {
+    --blue: #0047ff; --paper: #f3f0df; --orange: #ff713b;
+    --navy-950: #06152b; --navy-900: #06152b; --slate-800: #243447; --slate-600: #40506a; --slate-500: #546179;
+    --blue-800: #06359c; --blue-700: #003acb; --blue-600: #0047ff; --blue-500: #0047ff; --blue-400: #7fabff; --blue-100: #e5ebff; --blue-50: #f0f3ff;
+    --bg: #f3f0df; --surface: #fffdf5; --ink: #06152b; --ink-2: #40506a; --ink-3: #546179; --line: #b8bbba;
+    --ok: #003acb; --warn: #8a4a12; --radius: 0; --shadow: none;
+    --display: Impact, 'Arial Narrow', sans-serif;
+  }
+  body { background: var(--paper); font-size: 17px; line-height: 1.55; }
+  .wrap { width: min(1280px,92%); }
+  h1,h2,h3 { font-family: var(--display); font-weight: 400; letter-spacing: -.015em; }
+  h2 { font-size: clamp(30px,3.5vw,46px); line-height: 1.05; color: var(--ink); }
+  h3 { font-size: 27px; line-height: 1.15; }
+  a { text-underline-offset: 4px; }
+  :focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; border-radius: 0; }
+  .app-nav { position: relative; background: var(--blue); border-bottom: 1px solid #ffffff55; box-shadow: none; }
+  .app-nav .wrap { min-height: 100px; gap: 20px 30px; padding-block: 18px; }
+  .brand,.brand:hover { color: var(--paper); gap: 11px; flex-shrink: 0; }
+  .brand-mark { width: 53px; height: 53px; background: none; border-radius: 0; }
+  .brand-mark svg { width: 53px; height: 53px; display: block; }
+  .brand-word { display: flex; flex-direction: column; }
+  .brand-name { font: 40px/.95 var(--display); letter-spacing: -.035em; }
+  .brand-name > span { color: transparent; -webkit-text-stroke: 1px var(--paper); }
+  .brand-descriptor { margin-top: 9px; font: 8px/1.4 var(--mono); letter-spacing: .02em; }
+  .app-nav nav { margin-left: auto; gap: 10px 18px; }
+  .app-nav nav a,.app-nav nav a:hover,.app-nav nav a[aria-current='page'] { color: var(--paper); font-size: 14px; }
+  .app-nav nav a[aria-current='page'] { border-bottom-color: var(--paper); }
+  .hero { background: var(--blue); color: var(--paper); padding: 50px 0 48px; }
+  .hero h1 { font: 400 clamp(42px,5.4vw,76px)/1.03 var(--display); text-transform: uppercase; letter-spacing: -.02em; max-width: 25ch; }
+  .hero p.lead { color: var(--paper); max-width: 80ch; font-size: 18px; }
+  .eyebrow { color: var(--blue); font: 11px/1.5 var(--mono); letter-spacing: .09em; }
+  .hero .eyebrow { color: #d1dfff; }
+  .itp-privacy { background: var(--paper); color: var(--ink); border: 1px solid var(--paper); border-left: 5px solid var(--orange); border-radius: 0; }
+  .itp-privacy b { color: var(--ink); }
+  .itp-draft { color: var(--paper); background: transparent; border-left: 1px solid #ffffff88; font-size: 13px; }
+  .itp-workbook,.clearance-hero-note { background: var(--paper); color: var(--ink); border-color: var(--line); border-left-color: var(--orange); border-radius: 0; }
+  .hero .itp-workbook a { color: var(--blue); }
+  .section { padding: 48px 0; border-bottom: 1px solid #06152b22; }
+  .section.gray { background: #eae7d8; }
+  .section-head { display: block; }
+  .section-head .eyebrow { margin-bottom: 10px; }
+  .section-lead { font-size: 18px; }
+  .btn { border-radius: 0; font-size: 14px; }
+  .btn-primary { color: var(--paper); background: var(--blue); border-color: var(--blue); box-shadow: 3px 3px 0 var(--ink); }
+  .btn-primary:hover { color: var(--paper); background: var(--blue-700); }
+  .hero .btn-primary { color: var(--ink); background: var(--paper); border-color: var(--paper); }
+  .hero .btn-primary:hover { background: var(--orange); border-color: var(--orange); }
+  .btn-light { color: var(--ink); background: transparent; border-color: var(--ink); }
+  .btn-light:hover { color: var(--ink); background: var(--blue-100); }
+  .itp-cards { counter-reset: file; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 42px 24px; margin-top: 36px; }
+  .itp-card { position: relative; counter-increment: file; padding: 27px 24px 24px; background: var(--surface); border: 1px solid var(--ink); border-radius: 0; box-shadow: 5px 5px 0 #06152b18; gap: 12px; }
+  .itp-card::before { content: 'FILE / ' counter(file,decimal-leading-zero); position: absolute; left: -1px; top: -24px; padding: 5px 16px; min-width: 110px; background: var(--blue); color: var(--paper); font: 11px/14px var(--mono); clip-path: polygon(0 0,85% 0,100% 100%,0 100%); }
+  .itp-card:hover { border-color: var(--blue); box-shadow: 5px 5px 0 var(--blue); }
+  .itp-card h3 { font-size: 30px; }
+  .itp-card p { font-size: 16px; }
+  .itp-card .more { padding-top: 14px; font-size: 14px; }
+  .rc-q,.rc-summary,.itp-preview,.itp-result,.itp-item,.itp-kpi,.itp-table-wrap,.itp-paste,.callout { border-radius: 0; box-shadow: none; border-color: var(--line); background: var(--surface); }
+  .rc-q legend,.rc-summary h2,.rc-group h3,.itp-preview h2,.itp-preview h3 { font-family: var(--font); font-weight: 700; }
+  .rc-num { border-radius: 0; background: var(--blue); }
+  .rc-options label,.itp-checks label,.itp-trigger-group .rc-options label { border-radius: 0; }
+  .rc-options label:has(input:checked),.itp-checks label:has(input:checked) { border-color: var(--blue); background: var(--blue-100); }
+  .rc-outcome { background: #eae7d8; border-radius: 0; }
+  .rc-ok { border-left-color: var(--blue); }
+  .callout { border-left: 4px solid var(--orange); color: var(--ink); }
+  .itp-field input[type='text'],.itp-field input[type='date'],.itp-field select,.itp-field textarea,.itp-table input,.itp-table select,.itp-paste textarea { border-radius: 0; background: var(--surface); }
+  .itp-table th { background: var(--ink); }
+  .itp-table td.itp-calc { background: #eae7d8; }
+  .itp-status { border-radius: 0; }
+  .itp-s-ok { background: var(--blue-100); color: var(--blue-800); }
+  .itp-kpi { border-top: 3px solid var(--blue); }
+  .itp-kpi b { font-family: var(--display); font-weight: 400; color: var(--blue); }
+  .itp-item .itp-q { font-family: var(--font); }
+  .app-foot { background: var(--ink); color: var(--paper); padding: 30px 0; }
+  .app-foot a { color: var(--paper); }
+  section[id] { scroll-margin-top: 20px; }
+  @media(max-width:1050px) { .app-nav nav { margin-left: 0; width: 100%; } .itp-cards { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+  @media(max-width:640px) {
+    .app-nav .wrap { gap: 16px; padding-block: 18px 12px; }
+    .brand-mark,.brand-mark svg { width: 40px; height: 40px; }
+    .brand-name { font-size: 32px; }
+    .brand-descriptor { font-size: 7px; }
+    .app-nav nav { gap: 4px 16px; }
+    .app-nav nav a { font-size: 12px; }
+    .hero { padding: 32px 0; }
+    .hero p.lead { font-size: 16px; }
+    .itp-cards { grid-template-columns: 1fr; }
+    .itp-privacy { padding: 12px; font-size: 14px; }
+    .section { padding: 32px 0; }
+  }
+}

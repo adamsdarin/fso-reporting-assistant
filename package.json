@@ -1,0 +1,17 @@
+{
+  "name": "fso-reporting-assistant",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Reporting decision aid for the FSO of a cleared contractor under 32 CFR Part 117, SEAD 3 and DCSA ISL 2021-02: do I report this, to whom, by when; a printable file note and a reporting log. Runs locally in the browser; records stay in an Excel workbook on the user's machine.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test test/*.test.js",
+    "serve": "node scripts/serve.js",
+    "serve:dist": "node scripts/build.js && node scripts/serve.js --dist",
+    "site-bundle": "node scripts/site-bundle.js"
+  }
+}
