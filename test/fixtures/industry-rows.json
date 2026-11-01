@@ -188,7 +188,7 @@
     "heading": "Loss, compromise or suspected compromise of U.S. or foreign classified information",
     "trigger": "Loss, compromise or suspected compromise of U.S. or foreign classified information",
     "route": "Contractor → CSA; if on a Government facility, also facility head; CSA notifies GCA under its process.",
-    "timing": "Immediately start a preliminary inquiry and validate classification. If loss/compromise is confirmed, promptly send initial report unless CSA directs otherwise. After investigation, send final report with new material facts, responsible person when determined, corrective/disciplinary action and basis for conclusion. The CSA may specify timing.{{LOSS_GUIDE_LINK}}",
+    "timing": "Immediately start a preliminary inquiry and validate classification. If loss/compromise is confirmed, promptly send initial report unless CSA directs otherwise. After investigation, send final report with new material facts, responsible person when determined, corrective/disciplinary action and basis for conclusion. The CSA may specify timing.",
     "authority": "32 CFR §117.8(d)(1)–(4)."
   },
   "c-culpability": {

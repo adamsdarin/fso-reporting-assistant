@@ -51,7 +51,8 @@ function unzipStored(bytes) {
 }
 // The website table, the way test/fixtures/industry-rows.json was extracted.
 function websiteRows(html) {
-  const strip = (s) => s.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+  // Build-time placeholders ({{…}}) are the website's, not its wording.
+  const strip = (s) => s.replace(/<[^>]+>/g, '').replace(/\{\{[A-Z_]+\}\}/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
   const rows = {};
   for (const m of html.matchAll(/<tr id="([a-z0-9-]+)"><th scope="row">([\s\S]*?)<\/th>([\s\S]*?)<\/tr>/g)) {
     const cells = [...m[3].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((c) => strip(c[1]));
