@@ -4,7 +4,7 @@
 // its answers into an outcome (report? to whom? by when? what to include?).
 //
 // SITE_ROWS holds the website's wording verbatim (trigger, route, timing and
-// authority); test/fixtures/industry-rows.json pins it and the test compares
+// authority, as of its commit 91cb8bc, 2026-10-31); test/fixtures/industry-rows.json pins it and the test compares
 // it with the website checkout when one is beside this repository. Keep the
 // authority strings exactly as the website has them; a verification note
 // that differs goes in `verified` on the event, not in the authority.
@@ -58,7 +58,7 @@
       trigger: 'As applicable to the person’s eligibility: applying for or receiving foreign citizenship/passport or identity documents; foreign business/employment/government service; foreign financial interests, accounts or property; foreign political activity or election voting; foreign financial benefits/support; and specified family or living-status changes.',
       route: 'Employee → FSO/designee. Some financial, political, marriage/cohabitation, roommate and adoption items are limited to TS/Q-level categories. Use the DCSA desktop aid and the precise category that applies.',
       timing: '',
-      authority: 'SEAD 3 §§G.1, G.2(d), H.1–2; ISL Tables 2–3',
+      authority: 'SEAD 3 §§G.1, H.1, H.2(e)–(g); ISL Tables 2–3',
     },
     'targeting-criminal': {
       layer: 'sead3',
@@ -66,7 +66,7 @@
       trigger: 'Report attempted elicitation, exploitation, blackmail, coercion or enticement; suspicious contacts; media contact seeking classified or legally protected information; and reportable arrest, charge, criminal conduct, detention or law-enforcement involvement.',
       route: 'Employee promptly notifies FSO/designee; the contractor makes required DISS/CSA reports and any separate Government-site, customer or law-enforcement report.',
       timing: '',
-      authority: 'SEAD 3 §§G.1(a), G.2(c)–(d), H.1(d), H.2(b)–(c); ISL Table 2',
+      authority: 'SEAD 3 §§G.2(a)–(c), H.2(a)–(c), F.3(f); ISL Table 2',
     },
     'conduct-financial': {
       layer: 'sead3',
@@ -74,7 +74,7 @@
       trigger: 'Report the drug/alcohol activity, treatment/counseling, financial concern/anomaly, defined health or behavioral event, or outside activity that meets the applicable SEAD 3 category. These are criteria-based; routine treatment alone is not universally reportable.',
       route: 'Employee → FSO/designee. The company handles sensitive details through approved channels and separately evaluates whether §117.8(c)(1) requires an adverse-information report.',
       timing: '',
-      authority: 'SEAD 3 §§G.2(d)–(f), §H.2(d)–(h); ISL Tables 1–3',
+      authority: 'SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 1–3',
     },
     'isl-crypto-row': {
       layer: 'sead3',
@@ -217,7 +217,7 @@
       heading: 'Loss, compromise or suspected compromise of U.S. or foreign classified information',
       trigger: 'Loss, compromise or suspected compromise of U.S. or foreign classified information',
       route: 'Contractor → CSA; if on a Government facility, also facility head; CSA notifies GCA under its process.',
-      timing: 'Immediately start a preliminary inquiry and validate classification. If loss/compromise is confirmed, promptly send initial report unless CSA directs otherwise. After investigation, send final report with new material facts, responsible person when determined, corrective/disciplinary action and basis for conclusion. The CSA may specify timing.',
+      timing: 'Immediately start a preliminary inquiry and validate classification. If loss/compromise is confirmed, promptly send initial report unless CSA directs otherwise. After investigation, send final report with new material facts, responsible person when determined, corrective/disciplinary action and basis for conclusion. The CSA may specify timing.{{LOSS_GUIDE_LINK}}',
       authority: '32 CFR §117.8(d)(1)–(4).',
     },
     'c-culpability': {
@@ -597,7 +597,7 @@
           when: { ...WHEN.none, text: 'Prior to participation or otherwise as soon as possible following the start of the involvement (SEAD 3 §E.2); no number of days.' },
           include,
           next: ['Use the DCSA SEAD 3 desktop aid and the precise category that applies.', SEAD3_SEP, RECORDS],
-          verified: `Checked against SEAD 3: ${cite}. The website row cites §G.2(d), which is bankruptcy or debt, and §H.2 as a whole; the living-status items are §H.2(e)–(g).`,
+          verified: `Checked against SEAD 3: ${cite}.`,
         };
       },
     },
@@ -626,7 +626,7 @@
             arrest: ['Date(s), location(s), charges or circumstances, disposition (App. A.15).'],
           }[t],
           next: [t === 'elicitation' ? 'An attempt to get classified information from an eligible employee is also the company’s suspicious-contact report under §117.8(c)(2); if it may be espionage, report to the FBI under §117.8(b): pick that event too.' : t === 'arrest' ? 'Evaluate the facts as possible adverse information under §117.8(c)(1); a Government-site, customer or law-enforcement report may also be required.' : 'Report the contact whether or not it resulted in a disclosure; media contact in the course of official duties need not be reported (SEAD 3 §G.2(b)).', SEAD3_SEP, RECORDS],
-          verified: `Checked against SEAD 3: ${cite}. The website row cites §§G.1(a), G.2(c)–(d), H.1(d), H.2(b)–(c); in the SEAD 3 text elicitation is §G.2(a)/§H.2(a), media contacts §G.2(b)/§H.2(b) and arrests §G.2(c)/§H.2(c).`,
+          verified: `Checked against SEAD 3: ${cite}.`,
         };
       },
     },
@@ -647,7 +647,7 @@
           when: { ...WHEN.none, text: 'Prior to participation or otherwise as soon as possible following the start of the involvement (SEAD 3 §E.2); no number of days.' },
           include: a.conductType === 'treatment' ? ['What the employee chooses to report through the approved protected channel; handle details only there.'] : ['Type of issue or anomaly, dollar value, reason (SEAD 3 App. A.16).'],
           next: ['Handle sensitive details only through the approved, privacy-protective channel.', 'Evaluate separately whether the facts require an adverse-information report under §117.8(c)(1).', RECORDS],
-          verified: `Checked against SEAD 3: ${cite}. The website row cites §§G.2(d)–(f) and §H.2(d)–(h); §G.2 has no item (f), and §H.2(e)–(g) are roommate, cohabitant and marriage.`,
+          verified: `Checked against SEAD 3: ${cite}.`,
         };
       },
     },

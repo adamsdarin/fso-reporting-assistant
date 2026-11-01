@@ -15,7 +15,8 @@ network requests, no horizontal scroll at 390 px, and the file note prints
 alone on one page. `npm run site-bundle` writes `site-bundle/` with
 `reporting.json`.
 
-Citations: 32 CFR §117.8 (and §117.7(d)–(e), §117.19) checked against eCFR
+Citations: the website's 27 authorities (fsotools-website commit 91cb8bc)
+match the texts. 32 CFR §117.8 (and §117.7(d)–(e), §117.19) checked against eCFR
 current as of 2026-10-29; SEAD 3 checked against the ODNI text; DFARS
 252.204-7012 against acquisition.gov. ISL 2021-02 not re-read (DCSA returned
 HTTP 403 to the build environment); its wording follows the website's reviewed
@@ -27,9 +28,6 @@ table. See `CITATIONS.md`.
   layout, in a desktop browser and in Excel (the owner confirmed the ITPM
   workbook pattern works in desktop Excel on 2026-09-24; this workbook uses
   the same writer and adds a WORKDAY formula).
-- Fix the three SEAD 3 citations on the fsotools.ai industry page (Open
-  Questions); then re-extract `test/fixtures/industry-rows.json` and the
-  `SITE_ROWS` block in `ra-events.js` and drop the "website row cites…" notes.
 - Verify ISL 2021-02 Tables 1–4 from a machine that can open the DCSA PDF and
   remove the "wording from the fsotools.ai reviewed table" labels.
 - Website integration (in `fsotools-website`, not here): landing page at
@@ -41,17 +39,6 @@ table. See `CITATIONS.md`.
   build environment. ISL-only outcomes (foreign cryptocurrency, specified
   mental-health events, Tables 1–4 references, the SPP duty) say so on the
   page and in CITATIONS.md.
-- **Website SEAD 3 cites to correct** (found against the SEAD 3 text; the data
-  module keeps the website's strings verbatim and shows the check on the
-  outcome card):
-  - `#targeting-criminal` cites §§G.1(a), G.2(c)–(d), H.1(d), H.2(b)–(c); the
-    text has elicitation at §G.2(a)/§H.2(a), media contacts §G.2(b)/§H.2(b),
-    arrests §G.2(c)/§H.2(c). §G.1(a) and §H.1(d) are foreign citizenship;
-    §G.2(d) is bankruptcy or debt.
-  - `#conduct-financial` cites §§G.2(d)–(f), §H.2(d)–(h); §G.2 has no (f),
-    and §H.2(e)–(g) are roommate, cohabitant and marriage.
-  - `#foreign-interests` cites §§G.1, G.2(d), H.1–2; §G.2(d) is bankruptcy;
-    the living-status items are §H.2(e)–(g).
 - **Excel formulas not machine-checked.** The ITPM Assistant checked its
   formulas with the Python `formulas` library; it is not available here. The
   File Notes "Due by" (WORKDAY) and "Alert" formulas and the Reporting Log
@@ -70,6 +57,10 @@ table. See `CITATIONS.md`.
 - Repository visibility (private for now) and license.
 
 ## Log
+- 2026-11-01 Claude — The website fixed its three SEAD 3 cites (fsotools-website
+  PR #55, commit 91cb8bc; found here against the SEAD 3 text on 2026-10-31).
+  Re-extracted the fixture and `SITE_ROWS`; dropped the correction notes from
+  the outcome cards; CITATIONS.md records the change.
 - 2026-11-01 Claude — First complete build: workbook module (Reporting Log
   identical to the ITPM log; File Notes with WORKDAY due dates and an Alert
   formula, JavaScript rules and tests pinning both); the events module (27

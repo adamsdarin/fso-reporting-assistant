@@ -22,9 +22,8 @@ official texts:
   guidance through the website's October 2026 notes and were not re-checked.
 
 Status: **verified** (the cite and the claim match the text), **corrected**
-(the website's cite differs from the text; the data module keeps the website's
-authority string verbatim and shows the check on the outcome card), or
-**good practice** (the rule does not require it, and the pages say so).
+(a cite that was changed during this check), or **good practice** (the rule
+does not require it, and the pages say so).
 
 ## 32 CFR §117.8 — verified as written
 
@@ -77,19 +76,23 @@ authority string verbatim and shows the check on the outcome card), or
 | SEAD 3 App. A.1(a)–(j), SEAD 3 App. A.1(a), SEAD 3 App. A.1(g), App. A.1(h), App. A.1(i)–(j) | Required data elements for foreign travel: (a) complete itinerary; (b) dates; (c) mode of transportation and carriers; (d) passport data; (e) foreign national travelling companions; (f) planned contacts; (g) unplanned contacts (post-travel); (h) emergency point of contact; (i) unusual or suspicious occurrences (post-travel); (j) foreign legal or customs incidents (post-travel). `travel`. |
 | SEAD 3 App. A.2, SEAD 3 App. A.3, App. A.4–A.12, SEAD 3 App. A.7–A.10, App. A.11, App. A.12, SEAD 3 App. A.13, App. A.14, App. A.15, SEAD 3 App. A.16, App. A.17 | Data elements: A.2 FIE contact; A.3 continuing association or roommate; A.4 foreign business; A.5 bank account; A.6 property; A.7 citizenship; A.8–A.10 passport application, possession, use; A.11 voting; A.12 adoption; A.13 elicitation; A.14 media contacts; A.15 arrests; A.16 financial issues and anomalies; A.17 cohabitants. Listed under "What to include". |
 
-### Corrected: website SEAD 3 cites that differ from the text
+### Website SEAD 3 cites: corrected upstream, now verified
 
-The website's authority strings are kept verbatim in `SITE_ROWS` (the test
-requires it); the outcome card shows the check; `HANDOFF.md` lists the website
-fixes to make.
+The first extraction of the website table (2026-10-31, commit 3acd88a of
+fsotools-website) carried three SEAD 3 cites that did not match the text:
+`#targeting-criminal` (§§G.1(a), G.2(c)–(d), H.1(d), H.2(b)–(c)),
+`#conduct-financial` (§§G.2(d)–(f), §H.2(d)–(h)) and `#foreign-interests`
+(§§G.1, G.2(d), H.1–2). The website fixed them the same day (PR #55, merged as
+commit 91cb8bc), and `SITE_ROWS` and `test/fixtures/industry-rows.json` were
+re-extracted from that commit. The authorities now read, and are **verified**:
 
-| Website row | Website cite | What the SEAD 3 text has |
-|---|---|---|
-| `#targeting-criminal` | SEAD 3 §§G.1(a), G.2(c)–(d), H.1(d), H.2(b)–(c) | Elicitation §G.2(a)/§H.2(a); media contacts §G.2(b)/§H.2(b); arrests §G.2(c)/§H.2(c). §G.1(a) and §H.1(d) are foreign citizenship; §G.2(d) is bankruptcy or debt. **Corrected** on the card. |
-| `#conduct-financial` | SEAD 3 §§G.2(d)–(f), §H.2(d)–(h) | §G.2(d)–(e) and §H.2(d), (h) are the financial and treatment items; §G.2 has no (f); §H.2(e)–(g) are roommate, cohabitant and marriage. **Corrected** on the card. |
-| `#foreign-interests` | SEAD 3 §§G.1, G.2(d), H.1–2 | §G.1, §H.1 and §H.2(e)–(g); §G.2(d) is bankruptcy. **Corrected** on the card. |
-| `#travel`, `#foreign-contacts`, `#peer-concerns` | §F.1(b), App. A.1; §§D.8, F.2; §F.3 | **Verified** as written. |
-| All 19 company rows | 32 CFR §117.8(…) | **Verified** as written (the trailing period is part of the website string). |
+| Website row | Authority |
+|---|---|
+| `#targeting-criminal` | SEAD 3 §§G.2(a)–(c), H.2(a)–(c), F.3(f); ISL Table 2 |
+| `#conduct-financial` | SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 1–3 |
+| `#foreign-interests` | SEAD 3 §§G.1, H.1, H.2(e)–(g); ISL Tables 2–3 |
+| `#travel`, `#foreign-contacts`, `#peer-concerns` | §F.1(b), App. A.1; §§D.8, F.2; §F.3: **verified** as written. |
+| All 19 company rows | 32 CFR §117.8(…): **verified** as written (the trailing period is part of the website string). |
 
 ## DFARS 252.204-7012 — verified on acquisition.gov
 
@@ -221,15 +224,14 @@ The test checks each string below against this file exactly as the page or the d
 - `SEAD 3 §F.3(a)–(h)` — verified
 - `SEAD 3 §F.3(e)` — verified
 - `SEAD 3 §G.1` — verified
-- `SEAD 3 §G.1(a)` — verified
 - `SEAD 3 §G.1(a)–(b)` — verified
 - `SEAD 3 §G.2` — verified
 - `SEAD 3 §G.2(a)` — verified
+- `SEAD 3 §G.2(a)–(c)` — verified
 - `SEAD 3 §G.2(b)` — verified
 - `SEAD 3 §G.2(c)` — verified
 - `SEAD 3 §G.2(d)` — verified
 - `SEAD 3 §G.2(d)–(e)` — verified
-- `SEAD 3 §G.2(d)–(f)` — website cite; corrected above (§G.2 has no (f))
 - `SEAD 3 §G.2(e)` — verified
 - `SEAD 3 §H` — verified
 - `SEAD 3 §H.1(a)–(c)` — verified
