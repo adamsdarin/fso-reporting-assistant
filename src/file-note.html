@@ -1,0 +1,65 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>File Note · FSO Reporting Assistant</title><meta name="description" content="A one-page file note for a reportable event: when and how learned, facts, recipients, due date, submission and follow-up. Print to PDF or export to Excel." /><link rel="canonical" href="https://fsotools.ai/reporting/aid/app/file-note" />
+<meta property="og:site_name" content="FSOtools" /><meta property="og:type" content="website" /><meta property="og:url" content="https://fsotools.ai/reporting/aid/app/file-note" /><meta property="og:title" content="File Note · FSO Reporting Assistant" /><meta property="og:description" content="A one-page file note for a reportable event: when and how learned, facts, recipients, due date, submission and follow-up. Print to PDF or export to Excel." /><meta property="og:image" content="https://fsotools.ai/assets/fsotools-share-v2.png" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="FSOtools: tools and guides for Facility Security Officers." /><meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="assets/base.css" /><link rel="stylesheet" href="assets/ra.css" /><link rel="stylesheet" href="assets/ra-identity.css" /><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%225%22%20fill%3D%22%230047ff%22%2F%3E%3Cg%20fill%3D%22%23f3f0df%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5%2014h22l8%208h24v35H5zm15%2015v23h7v-8h15v-6H27v-3h20v-6z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
+<script src="assets/ra-citation-links.js" defer></script><script src="assets/ra-xlsx.js" defer></script><script src="assets/ra-workbook.js" defer></script><script src="assets/ra-events.js" defer></script><script src="assets/ra-file-note.js" defer></script><script src="assets/ra-hub.js" defer></script></head>
+<body><header class="app-nav"><div class="wrap"><a class="brand" href="https://fsotools.ai/" aria-label="FSOtools home"><span class="brand-mark"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#f3f0df"><path fill-rule="evenodd" d="M5 14h22l8 8h24v35H5zm15 15v23h7v-8h15v-6H27v-3h20v-6z"/></svg></span><span class="brand-word"><span class="brand-name">FSO<span>TOOLS</span></span><span class="brand-descriptor">REPORTING DECISION AID / FIELD TOOLS</span></span></a><nav aria-label="Tools"><a href="index.html">Overview</a><a href="decide.html">Decide</a><a href="file-note.html" aria-current="page">File note</a></nav></div></header>
+<main><section class="hero clearance-hero subpage-hero"><div class="wrap"><p class="eyebrow"><a href="index.html">FSO Reporting Assistant</a> · File note</p><h1>The file note</h1>
+<p class="lead">One page for the company’s record of a reportable event: when and how you learned of it, the event and the aid’s outcome, the facts as known, the recipients and channels, the due date, the submission and the follow-up. Print it to PDF, export it to the File Notes sheet, and add it to the reporting log.</p>
+<div class="itp-privacy"><div><b>Nothing you type leaves this page.</b> Print or export the note before you close the tab.</div></div>
+<div class="itp-workbook itp-noprint"><button class="btn btn-primary btn-sm" type="button" id="ra-blank">Download the blank workbook (.xlsx)</button><p><b>Your workbook.</b> Records live in one Excel file on your machine. Download it once; this tool’s export matches the File Notes and Reporting Log sheets, so its rows paste straight in.</p></div>
+</div></section>
+<section class="section ra-note-section"><div class="wrap">
+<noscript><p class="callout">This page needs JavaScript to compute due dates and exports; the form itself prints without it.</p></noscript>
+<form id="fn-form" class="ra-note" autocomplete="off" aria-label="File note">
+<h2>File note: reportable event</h2>
+<p class="ra-meta">Company record. A preparation aid, not a determination and not legal advice. Keep with the security program’s records, access-restricted.</p>
+<fieldset><legend>When and how learned</legend>
+<div class="itp-grid-2">
+<label class="itp-field"><span>Date learned</span><input type="date" id="fn-learned" /></label>
+<label class="itp-field"><span>Time learned</span><input type="time" id="fn-time" /></label>
+</div>
+<label class="itp-field"><span>How learned (role, not name)</span><input type="text" id="fn-how" placeholder="e.g. employee self-report to the FSO; supervisor; ISSM; DCSA IS Rep" /><small>Name the role of the person who told you, not the person.</small></label>
+<label class="itp-field"><span>Subject</span><input type="text" id="fn-case" /><small>Defaults to an internal case ID. A name may be entered only in the company’s protected records, not here.</small></label>
+</fieldset>
+<fieldset><legend>Event and outcome</legend>
+<label class="itp-field"><span>Event category</span><select id="fn-event"><option value="">Choose the event</option></select><small>Prefilled from the decision page when you arrive from “Prepare the file note”.</small></label>
+<label class="itp-field"><span>Who or what it is about</span><input type="text" id="fn-branch" /></label>
+<label class="itp-field"><span>The aid’s outcome</span><textarea id="fn-outcome" rows="2"></textarea><small>Report: yes · Not under these rules, but consider · Stop: emergency route · Settle before deciding · Not yet: preliminary inquiry first.</small></label>
+</fieldset>
+<fieldset><legend>Facts as known</legend>
+<p class="ra-warn"><b>Facts only.</b> No diagnoses, no rumor or innuendo, no opinions or guesses. Reports to the CSA may not be based on rumor or innuendo (32 CFR §117.8(c)(1)). Record who (by role), what, when, where and how, as known at the time of this note.</p>
+<label class="itp-field"><span>What is known</span><textarea id="fn-facts" rows="6"></textarea></label>
+</fieldset>
+<fieldset><legend>Recipients and timing</legend>
+<label class="itp-field"><span>Recipients and channels (one per line)</span><textarea id="fn-recipients" rows="3"></textarea></label>
+<p class="rc-help" id="fn-when">Pick the event on the decision page for the rule’s clock, or enter the clock here.</p>
+<div class="itp-grid-2">
+<label class="itp-field"><span>Clock (days)</span><input type="text" id="fn-clock" inputmode="numeric" pattern="[0-9]*" /><small>Blank when the rule sets no number: enter your company standard in Due by.</small></label>
+<label class="itp-field"><span>Clock basis</span><select id="fn-basis"><option value="calendar">calendar days</option><option value="business">business days</option></select></label>
+<label class="itp-field"><span>Due by</span><input type="date" id="fn-due" /><small>Computed from Date learned and the clock (business days skip weekends, no holiday list); you can overwrite it.</small></label>
+<label class="itp-field"><span>Status</span><select id="fn-status"><option>Open</option><option>Submitted</option><option>Closed</option><option>Not reportable</option></select><small>Alert: <span id="fn-alert"></span></small></label>
+<label class="itp-field"><span>Date submitted</span><input type="date" id="fn-submitted" /></label>
+<label class="itp-field"><span>Confirmation or reference number</span><input type="text" id="fn-ref" /></label>
+</div>
+</fieldset>
+<fieldset><legend>Prepared, reviewed, follow-up</legend>
+<div class="itp-grid-2">
+<label class="itp-field"><span>Prepared by (role/initials)</span><input type="text" id="fn-prepared" /></label>
+<label class="itp-field"><span>Reviewed by (role/initials)</span><input type="text" id="fn-reviewed" /></label>
+</div>
+<label class="itp-field"><span>Follow-up actions</span><textarea id="fn-followup" rows="3" placeholder="e.g. final report after the investigation; disposition to the USG security POC; notify the prime; ITPSO review"></textarea></label>
+<label class="itp-field"><span>Follow-up due</span><input type="date" id="fn-followup-due" /></label>
+<label class="itp-field"><span>Authority</span><input type="text" id="fn-authority" /></label>
+<div class="ra-sign"><div>Prepared by (role / initials / date)</div><div>Reviewed by (role / initials / date)</div></div>
+</fieldset>
+<div class="itp-toolbar"><button class="btn btn-primary btn-sm" type="button" id="fn-print">Print / save as PDF</button><button class="btn btn-light btn-sm" type="button" id="fn-export">Export this note to Excel</button><button class="btn btn-light btn-sm" type="button" id="fn-add">Add to the session log</button></div>
+</form>
+</div></section>
+<section class="section gray" id="log"><div class="wrap">
+<div class="section-head"><p class="eyebrow">This session</p><h2>Notes and log entries</h2><p class="section-lead">Each note you add becomes a File Notes row and a Reporting Log row. Export them, then paste the rows into the same sheets of your workbook.</p></div>
+<div class="itp-toolbar"><button class="btn btn-primary btn-sm" type="button" id="fn-export-log" disabled>Export the session to Excel</button><button class="btn btn-light btn-sm" type="button" id="fn-clear" disabled>Clear</button><span class="itp-hint" id="fn-count">No notes yet.</span></div>
+<div class="itp-table-wrap"><table class="itp-table"><thead><tr><th>Case ID</th><th>Date learned</th><th>Event</th><th>Outcome</th><th>Due by</th><th>Status</th><th><span class="sr">Remove</span></th></tr></thead><tbody id="fn-log"></tbody></table></div>
+<p class="source-line"><b>Sources:</b> <a href="https://www.ecfr.gov/current/title-32/subtitle-A/chapter-I/subchapter-D/part-117/section-117.8">32 CFR §117.8</a>; ODNI SEAD 3; DCSA ISL 2021-02. The note’s fields follow the data elements the rule and SEAD 3 Appendix A name; the layout is good practice, not a prescribed form. Not legal advice.</p>
+</div></section>
+</main><footer class="app-foot"><div class="wrap"><p><b>FSO Reporting Assistant</b> · reporting decision aid for cleared contractors. Part of <a href="https://fsotools.ai/">FSOtools</a>.</p><p>An independent project, not an official product of the Department of Defense or DCSA. A preparation aid, not a determination and not legal advice. Runs entirely on this page: nothing is stored or sent.</p><p class="mono">{{VERSION}}</p></div></footer></body></html>
