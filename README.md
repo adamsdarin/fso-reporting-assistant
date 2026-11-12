@@ -58,9 +58,9 @@ and to the eCFR paragraph. `decide(eventId, answers)` is a pure function.
 ```
 src/                 the app (edit here)
   *.html             one page per tool; relative links, no server needed
-  assets/base.css           tokens, page chrome, question cards (from the ITPM Assistant)
+  assets/base.css           the FSOtools identity's tokens, page chrome, question cards (from the ITPM Assistant)
   assets/ra.css             tool styles, the file note's print layout
-  assets/ra-identity.css    the FSOtools index-folder identity (loaded last)
+  assets/ra-fonts.css, assets/fonts/   Inter and JetBrains Mono (OFL), embedded in each built page
   assets/ra-xlsx.js         .xlsx writer (SpreadsheetML + stored ZIP, no library; copied from the ITPM Assistant)
   assets/ra-workbook.js     sheet definitions, formulas, matching rules, shared helpers
   assets/ra-events.js       the 27 events, questions, clocks and the decision engine
@@ -70,7 +70,8 @@ src/                 the app (edit here)
   assets/ra-hub.js          the blank workbook download
 scripts/build.js     src/ → dist/: each page as one self-contained HTML file
 scripts/serve.js     serve src/ (or dist/ with --dist) on localhost:5193
-scripts/site-bundle.js  dist/ + offline .zip + manifest → site-bundle/, for fsotools-website
+scripts/brand-check.js  runs fsotools-website's brand checker over dist/
+scripts/site-bundle.js  brand check, then dist/ + offline .zip + manifest → site-bundle/, for fsotools-website
 test/                node --test; test/fixtures/industry-rows.json pins the website rows
 docs/sources/        the eCFR texts the citations were checked against (public texts)
 ```
@@ -82,10 +83,22 @@ npm test             # builds dist/, then runs the tests
 npm run build        # dist/: the offline edition (open dist/index.html from disk)
 npm run serve        # develop against src/ at http://localhost:5193/
 npm run serve:dist   # build, then serve dist/
+npm run brand-check  # build, then check the pages against the FSOtools identity (the website's rules)
 npm run site-bundle  # site-bundle/: pages, offline .zip and reporting.json (hashes) for the website
 ```
 
 Node 22 or later. No dependencies.
+
+## Look and brand
+
+The pages wear the FSOtools night identity: charcoal ground, the logo's blue,
+Inter and JetBrains Mono, square corners. That identity belongs to the website
+repository (`fsotools-website/BRAND.md`), not to this one. `npm run brand-check`
+loads the website's own checker (`scripts/brand-check.mjs`) from the checkout
+beside this one (`../fsotools-website`, or the path in `FSOTOOLS_WEBSITE`), so
+there is one set of rules. `npm run site-bundle` will not write a bundle from
+pages that fail, or when the checker cannot be found; the website's import runs
+the same check again. Printed pages switch to dark ink on white.
 
 ## Relationship to fsotools.ai
 

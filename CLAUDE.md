@@ -38,3 +38,17 @@ Rules that must hold:
   beside this one) and fix bugs there first.
 - Accessibility and layout: labels on every input, keyboard-operable, no
   horizontal scroll at 390 px, prints cleanly (the file note especially).
+- The look is the FSOtools identity, and it is not decided here. The website's
+  robot owns it: `../fsotools-website/BRAND.md` and its checker,
+  `scripts/brand-check.mjs`. Before changing a colour, a typeface, a corner,
+  the header, the footer, the mark or the wordmark, read that BRAND.md and use
+  only its tokens, which `src/assets/base.css` carries in `:root`; write no
+  colour anywhere else. After any visual change run `npm run brand-check`: it
+  runs the website's checker over the built pages. `npm run site-bundle` and
+  the website's `npm run import-reporting` both refuse pages that fail it.
+- If the pages need something the identity lacks, or the check looks wrong, do
+  not work around it here (no copied rules, no skipped check, no second
+  palette). Make the change in fsotools-website under its own instructions
+  (BRAND.md, the checker and its test together), then come back and re-run the
+  check. When the website changes its identity, restyle here until the check
+  passes, then bundle and import.

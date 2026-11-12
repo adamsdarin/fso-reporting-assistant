@@ -8,7 +8,7 @@
 //   app/*.html                              the built pages, byte for byte from dist/
 //   fso-reporting-assistant-offline.zip     the same pages in one download
 //   reporting.json                          version, commit, whether the tree was
-//                                           clean, and the SHA-256 of every file
+//                                           clean, the brand check's result, and the SHA-256 of every file
 //
 // The website refuses a bundle whose files do not match reporting.json, or one
 // built from uncommitted changes, so what goes live traces to a commit.
@@ -19,6 +19,7 @@ import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'nod
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { brandCheck, report } from './brand-check.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -26,6 +27,16 @@ const OUT = join(ROOT, 'site-bundle');
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
 
 execFileSync(process.execPath, [join(ROOT, 'scripts', 'build.js')], { cwd: ROOT, stdio: 'inherit' });
+
+// The pages must be on the FSOtools identity before they are packaged. The
+// rules are the website's (scripts/brand-check.js runs its checker); a bundle
+// is not made from pages that fail, or when the check cannot run.
+const brand = await brandCheck({ build: false });
+const brandExit = report(brand);
+if (brandExit) {
+  console.error('No bundle written.');
+  process.exit(brandExit);
+}
 
 let commit = 'uncommitted';
 let dirty = true;
@@ -68,6 +79,6 @@ for (const p of pages) {
 }
 writeFileSync(join(OUT, ZIP), zip);
 files[ZIP] = sha(zip);
-const manifest = { name: pkg.name, version: pkg.version, commit, dirty, built: new Date().toISOString().slice(0, 10), zip: ZIP, zipBytes: zip.length, pages, files };
+const manifest = { name: pkg.name, version: pkg.version, commit, dirty, built: new Date().toISOString().slice(0, 10), brandCheck: brand.status, zip: ZIP, zipBytes: zip.length, pages, files };
 writeFileSync(join(OUT, 'reporting.json'), `${JSON.stringify(manifest, null, 2)}\n`);
 console.log(`site-bundle/: ${pages.length} pages + ${ZIP} (${Math.round(zip.length / 1024)} KB) · ${commit}${dirty ? ' (dirty: commit before importing)' : ''}`);
