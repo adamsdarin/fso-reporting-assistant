@@ -5,7 +5,9 @@ Last updated: 2026-11-23 by Claude (branch `claude/sead3-row-corrections`, on to
 ## Current State
 2026-11-23 (owner request in the fsotools-website session, "Yes, fix them";
 branch `claude/sead3-row-corrections`, worktree `.claude/worktrees/sead3-rows`,
-on top of `claude/night-identity`; committed, not pushed): the website
+on top of `claude/night-identity`; committed and pushed 2026-11-23 on the
+owner’s word, "Yes, push it", which also published that branch’s commit
+`e115c83` as part of this one): the website
 corrected four SEAD 3 rows (`#peer-concerns`, `#foreign-interests`,
 `#targeting-criminal`, `#conduct-financial`) after SEAD 3 and ISL 2021-02
 were read in full. `SITE_ROWS` and the fixture were re-extracted from
@@ -95,7 +97,8 @@ table. See `CITATIONS.md`.
 - 2026-11-23 Claude — Took the website's four corrected SEAD 3 rows
   (fsotools-website commit b9e2097): re-extracted the fixture and `SITE_ROWS`,
   turned three "something else" answers from "settle" into "consider" now that
-  ISL 2021-02 has been read, and recorded it in `CITATIONS.md`. Not pushed.
+  ISL 2021-02 has been read, and recorded it in `CITATIONS.md`. Pushed the same
+  day on the owner’s word; the repository is public.
 - 2026-11-01 Claude — The website fixed its three SEAD 3 cites (fsotools-website
   PR #55, commit 91cb8bc; found here against the SEAD 3 text on 2026-10-31).
   Re-extracted the fixture and `SITE_ROWS`; dropped the correction notes from
