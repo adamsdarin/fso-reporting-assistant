@@ -1,8 +1,23 @@
 # HANDOFF — FSO Reporting Assistant
 
-Last updated: 2026-11-12 by Claude (branch `claude/night-identity`: the night identity and the brand check).
+Last updated: 2026-11-23 by Claude (branch `claude/sead3-row-corrections`, on top of `claude/night-identity`: four website rows corrected against SEAD 3 and ISL 2021-02).
 
 ## Current State
+2026-11-23 (owner request in the fsotools-website session, "Yes, fix them";
+branch `claude/sead3-row-corrections`, worktree `.claude/worktrees/sead3-rows`,
+on top of `claude/night-identity`; committed, not pushed): the website
+corrected four SEAD 3 rows (`#peer-concerns`, `#foreign-interests`,
+`#targeting-criminal`, `#conduct-financial`) after SEAD 3 and ISL 2021-02
+were read in full. `SITE_ROWS` and the fixture were re-extracted from
+fsotools-website commit b9e2097 (its branch `claude/sead3-row-corrections`,
+not merged when this was written). The "something else" answers on foreign
+interests, targeting and conduct now end in "consider" and say why, and the
+conduct event's label and summary no longer name health or outside activity.
+`npm test` in the worktree: 13 pass, 3 skip (the sibling checkouts are not
+beside a worktree). Until the website change reaches the checkout at
+`../fsotools-website`, the website-comparison test run from the main checkout
+will report those four rows as different. Details: `CITATIONS.md`.
+
 2026-11-12 (owner request, branch `claude/night-identity`, not pushed): the
 three pages wear the FSOtools night identity, as the FSO ITPM Assistant
 does since the same day (charcoal ground and grid, the logo's blue, Inter and
@@ -77,6 +92,10 @@ table. See `CITATIONS.md`.
 - Repository visibility (private for now) and license.
 
 ## Log
+- 2026-11-23 Claude — Took the website's four corrected SEAD 3 rows
+  (fsotools-website commit b9e2097): re-extracted the fixture and `SITE_ROWS`,
+  turned three "something else" answers from "settle" into "consider" now that
+  ISL 2021-02 has been read, and recorded it in `CITATIONS.md`. Not pushed.
 - 2026-11-01 Claude — The website fixed its three SEAD 3 cites (fsotools-website
   PR #55, commit 91cb8bc; found here against the SEAD 3 text on 2026-10-31).
   Re-extracted the fixture and `SITE_ROWS`; dropped the correction notes from

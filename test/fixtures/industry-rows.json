@@ -18,7 +18,7 @@
   "peer-concerns": {
     "layer": "sead3",
     "heading": "SEAD 3 · Report concerns about another covered person",
-    "trigger": "Report known conduct indicating unwillingness to follow security rules, unexplained affluence or excessive debt, alcohol or illegal drug misuse, criminal conduct, behavior affecting safe protection of information, misuse of Government property/systems, or loss, compromise, tampering or unauthorized access.",
+    "trigger": "Report known conduct of another covered person that may be of security or counterintelligence concern: unwillingness to comply with rules or to cooperate with security requirements; unexplained affluence or excessive indebtedness; alcohol abuse; illegal use or misuse of drugs, or drug activity; apparent or suspected mental-health issues where there is reason to believe they may affect the person’s ability to protect classified or other legally protected information; criminal conduct; misuse of U.S. Government property or information systems; or any activity that raises doubts about the person’s continued national security eligibility.",
     "route": "Employee → FSO/designee through the company reporting process. Report factual observations; do not investigate or diagnose a coworker.",
     "timing": "",
     "authority": "SEAD 3 §F.3; ISL Table 2"
@@ -26,26 +26,26 @@
   "foreign-interests": {
     "layer": "sead3",
     "heading": "SEAD 3 · Foreign citizenship, affiliation and interests",
-    "trigger": "As applicable to the person’s eligibility: applying for or receiving foreign citizenship/passport or identity documents; foreign business/employment/government service; foreign financial interests, accounts or property; foreign political activity or election voting; foreign financial benefits/support; and specified family or living-status changes.",
-    "route": "Employee → FSO/designee. Some financial, political, marriage/cohabitation, roommate and adoption items are limited to TS/Q-level categories. Use the DCSA desktop aid and the precise category that applies.",
+    "trigger": "All covered individuals: applying for or receiving foreign citizenship; applying for, possessing or using a foreign passport or identity card for travel. With Top Secret or Q access, also: voting in a foreign election; direct involvement in foreign business; foreign bank accounts; ownership of foreign property, including foreign real estate and time-share rights; adoption of non-U.S.-citizen children; cohabitants; marriage, including legally recognized civil unions and domestic partnerships; and foreign-national roommates.",
+    "route": "Employee → FSO/designee. The voting, business, bank-account, property, adoption, cohabitant, marriage and roommate items are limited to Top Secret and Q. Diversified investments such as index funds are not reported as foreign property unless they consist entirely of foreign property holdings. Use the DCSA desktop aid and the precise category that applies.",
     "timing": "",
     "authority": "SEAD 3 §§G.1, H.1, H.2(e)–(g); ISL Tables 2–3"
   },
   "targeting-criminal": {
     "layer": "sead3",
-    "heading": "SEAD 3 · Targeting, media and criminal activity",
-    "trigger": "Report attempted elicitation, exploitation, blackmail, coercion or enticement; suspicious contacts; media contact seeking classified or legally protected information; and reportable arrest, charge, criminal conduct, detention or law-enforcement involvement.",
-    "route": "Employee promptly notifies FSO/designee; the contractor makes required DISS/CSA reports and any separate Government-site, customer or law-enforcement report.",
+    "heading": "SEAD 3 · Targeting, media contacts and arrests",
+    "trigger": "Report attempted elicitation, exploitation, blackmail, coercion or enticement to obtain classified information or other information specifically prohibited by law from disclosure; media contacts, other than for official purposes, where the media seeks access to such information, whether or not a disclosure results; and arrests.",
+    "route": "Employee promptly notifies FSO/designee; the contractor makes required DISS/CSA reports and any separate Government-site, customer or law-enforcement report. Suspicious contacts are the contractor’s own report under §117.8(c)(2).",
     "timing": "",
-    "authority": "SEAD 3 §§G.2(a)–(c), H.2(a)–(c), F.3(f); ISL Table 2"
+    "authority": "SEAD 3 §§G.2(a)–(c), H.2(a)–(c); ISL Table 2"
   },
   "conduct-financial": {
     "layer": "sead3",
-    "heading": "SEAD 3 · Drug, alcohol, health, financial and outside-activity matters",
-    "trigger": "Report the drug/alcohol activity, treatment/counseling, financial concern/anomaly, defined health or behavioral event, or outside activity that meets the applicable SEAD 3 category. These are criteria-based; routine treatment alone is not universally reportable.",
-    "route": "Employee → FSO/designee. The company handles sensitive details through approved channels and separately evaluates whether §117.8(c)(1) requires an adverse-information report.",
+    "heading": "SEAD 3 · Debt, financial anomalies and alcohol- or drug-related treatment",
+    "trigger": "Report bankruptcy or any debt more than 120 days delinquent, and alcohol- and drug-related treatment. With Top Secret or Q access, also report financial anomalies: these include garnishment and any unusual infusion of assets of $10,000 or more, such as an inheritance, winnings or a similar gain.",
+    "route": "Employee → FSO/designee. The company handles sensitive details through approved channels and separately evaluates whether §117.8(c)(1) requires an adverse-information report. SEAD 3 lists no outside-activity or health self-report; the ISL’s Table 1 criteria for mental health and cryptocurrency are separate rows.",
     "timing": "",
-    "authority": "SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 1–3"
+    "authority": "SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 2–3"
   },
   "isl-crypto-row": {
     "layer": "sead3",
