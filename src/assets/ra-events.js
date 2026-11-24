@@ -4,15 +4,15 @@
 // its answers into an outcome (report? to whom? by when? what to include?).
 //
 // SITE_ROWS holds the website's wording verbatim (trigger, route, timing and
-// authority, as of its commit 91cb8bc, 2026-10-31); test/fixtures/industry-rows.json pins it and the test compares
+// authority, as of its commit b9e2097, 2026-11-23); test/fixtures/industry-rows.json pins it and the test compares
 // it with the website checkout when one is beside this repository. Keep the
 // authority strings exactly as the website has them; a verification note
 // that differs goes in `verified` on the event, not in the authority.
 //
 // Rule text was checked against 32 CFR §117.8 on eCFR (current as of
 // 2026-10-29), SEAD 3 (ODNI, effective 12 June 2017) and DFARS 252.204-7012.
-// ISL 2021-02 could not be re-read in this pass: ISL wording follows the
-// website's reviewed table (CITATIONS.md).
+// ISL 2021-02 (revised May 2024) was read in full on 2026-11-23, when the
+// website corrected four SEAD 3 rows against it (CITATIONS.md).
 //
 // decide(eventId, answers) is pure: no DOM, no storage, no network.
 (function (root) {
@@ -47,7 +47,7 @@
     'peer-concerns': {
       layer: 'sead3',
       heading: 'SEAD 3 · Report concerns about another covered person',
-      trigger: 'Report known conduct indicating unwillingness to follow security rules, unexplained affluence or excessive debt, alcohol or illegal drug misuse, criminal conduct, behavior affecting safe protection of information, misuse of Government property/systems, or loss, compromise, tampering or unauthorized access.',
+      trigger: 'Report known conduct of another covered person that may be of security or counterintelligence concern: unwillingness to comply with rules or to cooperate with security requirements; unexplained affluence or excessive indebtedness; alcohol abuse; illegal use or misuse of drugs, or drug activity; apparent or suspected mental-health issues where there is reason to believe they may affect the person’s ability to protect classified or other legally protected information; criminal conduct; misuse of U.S. Government property or information systems; or any activity that raises doubts about the person’s continued national security eligibility.',
       route: 'Employee → FSO/designee through the company reporting process. Report factual observations; do not investigate or diagnose a coworker.',
       timing: '',
       authority: 'SEAD 3 §F.3; ISL Table 2',
@@ -55,26 +55,26 @@
     'foreign-interests': {
       layer: 'sead3',
       heading: 'SEAD 3 · Foreign citizenship, affiliation and interests',
-      trigger: 'As applicable to the person’s eligibility: applying for or receiving foreign citizenship/passport or identity documents; foreign business/employment/government service; foreign financial interests, accounts or property; foreign political activity or election voting; foreign financial benefits/support; and specified family or living-status changes.',
-      route: 'Employee → FSO/designee. Some financial, political, marriage/cohabitation, roommate and adoption items are limited to TS/Q-level categories. Use the DCSA desktop aid and the precise category that applies.',
+      trigger: 'All covered individuals: applying for or receiving foreign citizenship; applying for, possessing or using a foreign passport or identity card for travel. With Top Secret or Q access, also: voting in a foreign election; direct involvement in foreign business; foreign bank accounts; ownership of foreign property, including foreign real estate and time-share rights; adoption of non-U.S.-citizen children; cohabitants; marriage, including legally recognized civil unions and domestic partnerships; and foreign-national roommates.',
+      route: 'Employee → FSO/designee. The voting, business, bank-account, property, adoption, cohabitant, marriage and roommate items are limited to Top Secret and Q. Diversified investments such as index funds are not reported as foreign property unless they consist entirely of foreign property holdings. Use the DCSA desktop aid and the precise category that applies.',
       timing: '',
       authority: 'SEAD 3 §§G.1, H.1, H.2(e)–(g); ISL Tables 2–3',
     },
     'targeting-criminal': {
       layer: 'sead3',
-      heading: 'SEAD 3 · Targeting, media and criminal activity',
-      trigger: 'Report attempted elicitation, exploitation, blackmail, coercion or enticement; suspicious contacts; media contact seeking classified or legally protected information; and reportable arrest, charge, criminal conduct, detention or law-enforcement involvement.',
-      route: 'Employee promptly notifies FSO/designee; the contractor makes required DISS/CSA reports and any separate Government-site, customer or law-enforcement report.',
+      heading: 'SEAD 3 · Targeting, media contacts and arrests',
+      trigger: 'Report attempted elicitation, exploitation, blackmail, coercion or enticement to obtain classified information or other information specifically prohibited by law from disclosure; media contacts, other than for official purposes, where the media seeks access to such information, whether or not a disclosure results; and arrests.',
+      route: 'Employee promptly notifies FSO/designee; the contractor makes required DISS/CSA reports and any separate Government-site, customer or law-enforcement report. Suspicious contacts are the contractor’s own report under §117.8(c)(2).',
       timing: '',
-      authority: 'SEAD 3 §§G.2(a)–(c), H.2(a)–(c), F.3(f); ISL Table 2',
+      authority: 'SEAD 3 §§G.2(a)–(c), H.2(a)–(c); ISL Table 2',
     },
     'conduct-financial': {
       layer: 'sead3',
-      heading: 'SEAD 3 · Drug, alcohol, health, financial and outside-activity matters',
-      trigger: 'Report the drug/alcohol activity, treatment/counseling, financial concern/anomaly, defined health or behavioral event, or outside activity that meets the applicable SEAD 3 category. These are criteria-based; routine treatment alone is not universally reportable.',
-      route: 'Employee → FSO/designee. The company handles sensitive details through approved channels and separately evaluates whether §117.8(c)(1) requires an adverse-information report.',
+      heading: 'SEAD 3 · Debt, financial anomalies and alcohol- or drug-related treatment',
+      trigger: 'Report bankruptcy or any debt more than 120 days delinquent, and alcohol- and drug-related treatment. With Top Secret or Q access, also report financial anomalies: these include garnishment and any unusual infusion of assets of $10,000 or more, such as an inheritance, winnings or a similar gain.',
+      route: 'Employee → FSO/designee. The company handles sensitive details through approved channels and separately evaluates whether §117.8(c)(1) requires an adverse-information report. SEAD 3 lists no outside-activity or health self-report; the ISL’s Table 1 criteria for mental health and cryptocurrency are separate rows.',
       timing: '',
-      authority: 'SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 1–3',
+      authority: 'SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 2–3',
     },
     'isl-crypto-row': {
       layer: 'sead3',
@@ -405,7 +405,7 @@
         { v: 'voting', label: 'Voting in a foreign election' },
         { v: 'adoption', label: 'Adoption of a non-U.S. citizen child' },
         { v: 'living', label: 'A foreign national roommate for more than 30 days, a cohabitant, or a marriage' },
-        { v: 'other', label: 'Something else in this row (foreign employment or government service, political activity, financial benefits or support)' },
+        { v: 'other', label: 'Something else (foreign employment or government service, political activity, financial benefits or support)' },
         { v: 'unsure', label: 'Not sure' },
       ],
       settle: 'Identify the item first: SEAD 3 §G.1 and §H.1 list the foreign activities by category; ISL 2021-02 Tables 2–3 add the DCSA clarifications.',
@@ -419,7 +419,7 @@
         { v: 'other', label: 'Other criminal conduct, a charge, detention or law-enforcement involvement without an arrest' },
         { v: 'unsure', label: 'Not sure' },
       ],
-      settle: 'Establish what happened first. SEAD 3 §G.2 and §H.2 list elicitation, media contacts and arrests; ISL 2021-02 Table 2 clarifies arrests and criminal conduct.',
+      settle: 'Establish what happened first. SEAD 3 §G.2 and §H.2 list elicitation, media contacts and arrests; ISL 2021-02 Table 2 repeats them and adds nothing about other criminal conduct.',
     },
     conductType: {
       q: 'Which is it?',
@@ -580,7 +580,7 @@
       ask: () => ['covered', 'dod', 'level', 'interestType'],
       rules: (a) => {
         const tsOnly = ['business', 'voting', 'adoption', 'living'].includes(a.interestType);
-        if (a.interestType === 'other') return settle('Settle which item applies before deciding', 'Foreign employment or government service, political activity, and financial benefits or support are not listed in SEAD 3 §G.1 or §H.1 by those words; the website’s row draws them from ISL 2021-02 Tables 2–3, which this aid could not re-check. Confirm the exact ISL table item for the person’s category before reporting.');
+        if (a.interestType === 'other') return consider('Not a SEAD 3 item, but consider…', 'Foreign employment or government service, political activity, and financial benefits or support are not listed in SEAD 3 §G.1 or §H.1, or in ISL 2021-02 Tables 2–3 (revised May 2024, read 2026-11-23). Check whether the facts fit a listed item, such as direct involvement in foreign business (§H.1(a): Top Secret, “Q”, critical or special sensitive). Your CSA or the employee’s agency may require more (SEAD 3 §E.7), and the company still evaluates whether the facts are adverse information under §117.8(c)(1).', ['Evaluate the facts under §117.8(c)(1) (pick “Adverse information about a cleared employee”).', 'Record the decision.']);
         if (tsOnly && a.level === 's') return consider('Not required for this category under SEAD 3, but consider…', 'Foreign business, bank accounts, property, voting in a foreign election, adoption and the roommate, cohabitant and marriage items are in SEAD 3 §H (Top Secret, “Q”, critical or special sensitive), not §G. Your CSA or the employee’s agency may require more (SEAD 3 §E.7), and the company still evaluates whether the facts are adverse information under §117.8(c)(1).', ['Check ISL 2021-02 Tables 2–3 for DCSA’s clarifications for the person’s category.', 'Record the decision.']);
         const cite = { citizenship: a.level === 'ts' ? 'SEAD 3 §H.1(d)–(e); App. A.7–A.10' : 'SEAD 3 §G.1(a)–(b); App. A.7–A.10', business: 'SEAD 3 §H.1(a)–(c); App. A.4–A.6', voting: 'SEAD 3 §H.1(f); App. A.11', adoption: 'SEAD 3 §H.1(g); App. A.12', living: 'SEAD 3 §H.2(e)–(g); App. A.3, A.17' }[a.interestType];
         const include = {
@@ -608,7 +608,7 @@
       cfr: '117.8(c)(2)', sead3: true, isl: true,
       ask: () => ['covered', 'dod', 'targetType'],
       rules: (a) => {
-        if (a.targetType === 'other') return settle('Settle which item applies before deciding', 'SEAD 3 lists arrests (§G.2(c), §H.2(c)) for the person’s own report; other criminal conduct, charges, detention and law-enforcement involvement come from ISL 2021-02 Table 2, which this aid could not re-check. Confirm the ISL item, then decide; and evaluate the facts as possible adverse information under §117.8(c)(1) in any case.');
+        if (a.targetType === 'other') return consider('Not a SEAD 3 self-report, but consider…', 'SEAD 3 lists arrests (§G.2(c), §H.2(c)) for the person’s own report, and ISL 2021-02 Table 2 (revised May 2024, read 2026-11-23) lists only “Arrests”. Other criminal conduct, a charge, detention or law-enforcement involvement without an arrest is not a listed self-report. Criminal conduct by another covered person is reportable under SEAD 3 §F.3, and the company still evaluates the facts as possible adverse information under §117.8(c)(1).', ['Evaluate the facts under §117.8(c)(1) (pick “Adverse information about a cleared employee”).', 'Record the decision.']);
         const t = a.targetType;
         const cite = { elicitation: 'SEAD 3 §G.2(a) / §H.2(a); §117.8(c)(2)', media: 'SEAD 3 §G.2(b) / §H.2(b)', arrest: 'SEAD 3 §G.2(c) / §H.2(c)' }[t];
         const recipients = [R.fso(), R.dcsa(a, diss(a, t === 'elicitation' ? 'suspicious-contact report by the FSO' : 'incident report by the FSO'), cite)];
@@ -632,12 +632,12 @@
     },
     {
       id: 'conduct-financial', layer: 'sead3', branches: ['self'], group: 'SEAD 3 self-reports the employee makes to the FSO',
-      label: 'Financial trouble, alcohol- or drug-related treatment, or another health or outside-activity matter',
-      summary: 'Bankruptcy, debt over 120 days delinquent, garnishment, an unusual infusion of assets, treatment, and criteria-based health or outside-activity events.',
+      label: 'Financial trouble, or alcohol- or drug-related treatment',
+      summary: 'Bankruptcy, debt over 120 days delinquent, garnishment, an unusual infusion of assets, and alcohol- or drug-related treatment.',
       cfr: '117.8(c)(1)', sead3: true, isl: true,
       ask: () => ['covered', 'dod', 'level', 'conductType'],
       rules: (a) => {
-        if (a.conductType === 'other') return settle('Settle which item applies before deciding', 'Health, behavioral and outside-activity events are criteria-based: SEAD 3 §G.2(d)–(e) and §H.2(d), (h) list the financial and treatment items; the specified mental-health events are in ISL 2021-02 Table 1 (pick that event); other items come from ISL Tables 1–3, which this aid could not re-check. Routine treatment alone is not universally reportable. Confirm the item, then decide.');
+        if (a.conductType === 'other') return consider('Not a SEAD 3 self-report, but consider…', 'SEAD 3 §G.2(d)–(e) and §H.2(d), (h) list the financial and treatment items only. The specified mental-health events and foreign cryptocurrency are in ISL 2021-02 Table 1 (pick those events). SEAD 3 and ISL 2021-02 Tables 1–3 (revised May 2024, read 2026-11-23) list no other health, behavioral or outside-activity self-report. The company still evaluates the facts as possible adverse information under §117.8(c)(1), which ISL 2021-02 ties to the 13 adjudicative guidelines.', ['Evaluate the facts under §117.8(c)(1) (pick “Adverse information about a cleared employee”).', 'Record the decision.']);
         if (a.conductType === 'anomaly' && a.level === 's') return consider('Not required for this category under SEAD 3, but consider…', 'Garnishment and an unusual infusion of assets of $10,000 or more are SEAD 3 §H.2(d) items (Top Secret, “Q”, critical or special sensitive). For Secret, Confidential and “L”, §G.2(d) covers bankruptcy and debt over 120 days delinquent. The company still evaluates whether the facts are adverse information under §117.8(c)(1).', ['Check ISL 2021-02 Table 3 for DCSA’s Top Secret clarifications.', 'Record the decision.']);
         const cite = { debt: a.level === 'ts' ? 'SEAD 3 §H.2(d)' : 'SEAD 3 §G.2(d)', anomaly: 'SEAD 3 §H.2(d)', treatment: a.level === 'ts' ? 'SEAD 3 §H.2(h)' : 'SEAD 3 §G.2(e)' }[a.conductType];
         return {

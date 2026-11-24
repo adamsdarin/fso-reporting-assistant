@@ -295,13 +295,18 @@ test('every page has the same navigation, marking its own page, and links resolv
 test('the offline build: one self-contained file per page, with no network access', () => {
   for (const p of PAGES) {
     const html = dist(p);
-    assert.match(html, /<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'" \/>/, p);
+    assert.match(html, /<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'" \/>/, p);
     assert.ok(!/<script src=|<link rel="stylesheet"|src="assets\//.test(html), `${p}: every script and stylesheet is inlined`);
     assert.ok(!/\{\{[A-Z_]+\}\}/.test(html), `${p}: placeholders filled`);
     assert.match(html, /Version \d+\.\d+\.\d+ · /, `${p}: shows its version`);
+    // The font stylesheet is the exception: its four font files are embedded in it.
     for (const m of src(p).matchAll(/assets\/([a-z0-9-]+\.(?:js|css))/g)) {
+      if (m[1] === 'ra-fonts.css') continue;
       assert.ok(html.includes(`/* ${m[1]} */\n${src(`assets/${m[1]}`)}`), `${p}: ${m[1]} inlined unchanged`);
     }
+    assert.ok(html.includes('/* ra-fonts.css */'), `${p}: fonts inlined`);
+    assert.equal(html.match(/url\('data:font\/woff2;base64,/g)?.length, 4, `${p}: four embedded fonts`);
+    assert.ok(!/url\((?!'data:)/.test(html.replace(/<script>[\s\S]*?<\/script>/g, '')), `${p}: no stylesheet url() points at a file`);
     assert.ok(html.lastIndexOf('<script>') > html.indexOf('<main>'), `${p}: scripts at the end of the body`);
     // No script in the built page reaches the network or browser storage, and no external URL sits in script.
     for (const s of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
@@ -312,13 +317,17 @@ test('the offline build: one self-contained file per page, with no network acces
   }
 });
 
-test('site bundle: pages byte-identical to dist, an offline zip, and a manifest of hashes', () => {
+test('site bundle: pages byte-identical to dist, an offline zip, and a manifest of hashes', async (t) => {
+  // site-bundle refuses to run without the website's brand check (scripts/brand-check.js).
+  const { websiteChecker } = await import('../scripts/brand-check.js');
+  if (!websiteChecker()) return t.skip('no fsotools-website checkout with scripts/brand-check.mjs');
   execFileSync(process.execPath, [join(ROOT, 'scripts', 'site-bundle.js')], { cwd: ROOT, stdio: 'pipe' });
   const manifest = JSON.parse(readFileSync(join(ROOT, 'site-bundle', 'reporting.json'), 'utf8'));
-  assert.deepEqual(Object.keys(manifest), ['name', 'version', 'commit', 'dirty', 'built', 'zip', 'zipBytes', 'pages', 'files']);
+  assert.deepEqual(Object.keys(manifest), ['name', 'version', 'commit', 'dirty', 'built', 'brandCheck', 'zip', 'zipBytes', 'pages', 'files']);
   assert.equal(manifest.name, 'fso-reporting-assistant');
   assert.equal(manifest.zip, 'fso-reporting-assistant-offline.zip');
   assert.deepEqual(manifest.pages, [...PAGES].sort());
+  assert.equal(manifest.brandCheck, 'passed');
   for (const [path, hash] of Object.entries(manifest.files)) {
     assert.equal(createHash('sha256').update(readFileSync(join(ROOT, 'site-bundle', path))).digest('hex'), hash, path);
   }
@@ -370,4 +379,16 @@ test('every page fits search results and has a complete link preview', () => {
     assert.equal(meta('og:image'), 'https://fsotools.ai/assets/fsotools-share-v2.png', p);
     for (const name of ['og:title', 'twitter:card']) assert.ok(meta(name), `${p}: ${name}`);
   }
+});
+
+// The identity belongs to the FSOtools website (its BRAND.md); this runs that
+// repository's checker over the built pages. Skipped when no website checkout
+// sits beside this one: `npm run site-bundle` and the website's import still
+// refuse an off-brand page.
+test('the built pages are on the FSOtools identity (the website\'s brand check)', async (t) => {
+  const { brandCheck } = await import('../scripts/brand-check.js');
+  const result = await brandCheck({ build: false });
+  if (result.status === 'unavailable') return t.skip('no fsotools-website checkout with scripts/brand-check.mjs');
+  assert.deepEqual(result.failed, {});
+  assert.equal(result.files.length, PAGES.length);
 });

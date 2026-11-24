@@ -20,7 +20,8 @@ const OUT = join(ROOT, 'dist');
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
 
 // Inline scripts and styles only; no connections, forms, frames or base URL.
-export const CSP = "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'";
+// Fonts are embedded as data: URIs (font-src data:), so they are not a connection either.
+export const CSP = "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'";
 
 let commit = 'uncommitted';
 try {
@@ -31,7 +32,9 @@ try {
 }
 const version = `Version ${pkg.version} · ${commit} · built ${new Date().toISOString().slice(0, 10)}`;
 
-const asset = (name) => readFileSync(join(SRC, 'assets', name), 'utf8');
+// A stylesheet's url('fonts/x.woff2') becomes the file itself, embedded.
+const embedFonts = (css) => css.replace(/url\('fonts\/([a-z0-9-]+\.woff2)'\)/g, (_, f) => `url('data:font/woff2;base64,${readFileSync(join(SRC, 'assets', 'fonts', f)).toString('base64')}')`);
+const asset = (name) => (name.endsWith('.css') ? embedFonts(readFileSync(join(SRC, 'assets', name), 'utf8')) : readFileSync(join(SRC, 'assets', name), 'utf8'));
 // '</script' or '</style' inside an inlined file would end the element early.
 const safe = (text, tag) => text.replace(new RegExp(`</${tag}`, 'gi'), `<\\/${tag}`);
 
@@ -52,7 +55,7 @@ for (const page of pages) {
   html = html.replace('</body>', () => `${scripts.join('\n')}\n</body>`);
   html = html.replace('<meta charset="UTF-8" />', () => `<meta charset="UTF-8" /><meta http-equiv="Content-Security-Policy" content="${CSP}" />`);
   html = html.replace('{{VERSION}}', () => version);
-  if (/(src|href)="assets\//.test(html)) throw new Error(`${page}: an asset was not inlined`);
+  if (/(src|href)="assets\//.test(html) || /url\('fonts\//.test(html)) throw new Error(`${page}: an asset was not inlined`);
   html = globalThis.FsoSources.linkHtml(html, 'reporting/industry');
   writeFileSync(join(OUT, page), html);
 }

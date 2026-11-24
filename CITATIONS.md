@@ -94,6 +94,26 @@ re-extracted from that commit. The authorities now read, and are **verified**:
 | `#travel`, `#foreign-contacts`, `#peer-concerns` | §F.1(b), App. A.1; §§D.8, F.2; §F.3: **verified** as written. |
 | All 19 company rows | 32 CFR §117.8(…): **verified** as written (the trailing period is part of the website string). |
 
+### Website rows corrected against SEAD 3 and ISL 2021-02 (2026-11-23)
+
+This supersedes the table above for the rows it names. On 2026-11-23 the
+website corrected four SEAD 3 rows after SEAD 3 (Sections F to H, Appendix A)
+and ISL 2021-02 (revised May 2024, Tables 1 to 4) were read in full in the
+approved DCSA Library (fsotools-website commit b9e2097). `SITE_ROWS` and
+`test/fixtures/industry-rows.json` were re-extracted from that commit.
+
+| Website row | Change | Authority now |
+|---|---|---|
+| `#peer-concerns` | The list is SEAD 3 §F.3(a)–(h); "loss, compromise, tampering or unauthorized access" is gone. | SEAD 3 §F.3; ISL Table 2 |
+| `#foreign-interests` | Foreign employment or government service, political activity and financial benefits or support are gone: neither SEAD 3 §G.1 and §H.1 nor ISL Tables 2–3 lists them. | SEAD 3 §§G.1, H.1, H.2(e)–(g); ISL Tables 2–3 |
+| `#targeting-criminal` | Arrests only (SEAD 3 §G.2(c), §H.2(c); ISL Table 2 says "Arrests"). Suspicious contacts moved to the route, as the contractor's §117.8(c)(2) report. | SEAD 3 §§G.2(a)–(c), H.2(a)–(c); ISL Table 2 |
+| `#conduct-financial` | Bankruptcy or debt over 120 days delinquent, financial anomalies (Top Secret, "Q") and alcohol- and drug-related treatment. No health or outside-activity self-report. | SEAD 3 §§G.2(d)–(e), H.2(d), H.2(h); ISL Tables 2–3 |
+
+The "something else" answers on those three events now end in "consider", not
+"settle": the ISL has been read and lists no further item. ISL Table 1 was
+read too and matches the cryptocurrency and mental-health rows; the
+`verified` notes on those two events still carry their earlier wording.
+
 ## DFARS 252.204-7012 — verified on acquisition.gov
 
 | Cite | What the clause says |
